@@ -1,0 +1,21 @@
+import nltk
+from nltk.tokenize import word_tokenize
+from nltk.tag import DefaultTagger, UnigramTagger, BigramTagger, TrigramTagger
+nltk.download('punkt')
+nltk.download('brown')
+nltk.download('treebank')
+sentences = [
+    "The red car stopped at the traffic light",
+    "She quickly ran to catch the bus"
+]
+default_tagger = DefaultTagger('NN')
+unigram_tagger = UnigramTagger(nltk.corpus.brown.tagged_sents(), backoff=default_tagger)
+bigram_tagger = BigramTagger(nltk.corpus.treebank.tagged_sents(), backoff=unigram_tagger)
+trigram_tagger = TrigramTagger(nltk.corpus.treebank.tagged_sents(), backoff=bigram_tagger)
+for sentence in sentences:
+    words = word_tokenize(sentence)
+    pos_tags = trigram_tagger.tag(words)
+    print("\nOriginal Sentence:", sentence)
+    print("Part-of-Speech Tags:")
+    for word, pos_tag in pos_tags:
+        print(f"{word}: {pos_tag}")
