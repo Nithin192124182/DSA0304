@@ -1,0 +1,42 @@
+import re
+
+def rule_based_pos_tagging(sentence, patterns):
+    # Tokenize the sentence into words
+    words = sentence.split()
+
+    # Initialize an empty list to store the tagged words
+    tagged_words = []
+
+    # Apply the rules for part-of-speech tagging
+    for word in words:
+        for pattern, pos_tag in patterns:
+            if re.search(pattern, word):
+                tagged_words.append((word, pos_tag))
+                break
+        else:
+            tagged_words.append((word, 'NOUN'))  # Default to NOUN if no rule matches
+
+    return tagged_words
+
+# Example usage
+if __name__ == "__main__":
+    # Define the patterns for part-of-speech tagging
+    patterns = [
+        (r'\b(?:The|the)\b', 'DET'),  # Matches 'The' or 'the' as determiners
+        (r'\b(?:cat|dog)\b', 'NOUN'),  # Matches 'cat' or 'dog' as nouns
+        (r'\b(?:is|am|are)\b', 'VERB'),  # Matches 'is,' 'am,' or 'are' as verbs
+        (r'\b(?:quickly|brightly)\b', 'ADV'),  # Matches 'quickly' or 'brightly' as adverbs
+        (r'\b(?:[A-Za-z]+)\b', 'NOUN')  # Matches any other words as nouns
+    ]
+
+    # Input sentence
+    input_sentence = "The cat is running quickly"
+
+    # Perform rule-based part-of-speech tagging
+    result = rule_based_pos_tagging(input_sentence, patterns)
+
+    # Display the results
+    print("Word\t\tPOS Tag")
+    print("------------------------")
+    for word, pos_tag in result:
+        print(f"{word}\t\t{pos_tag}")
