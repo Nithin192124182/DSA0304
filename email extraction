@@ -1,0 +1,37 @@
+import re
+
+def validate_email(email):
+    # Define the regular expression pattern for a valid email address
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    
+    # Use re.match to check if the email matches the pattern
+    match = re.match(pattern, email)
+    
+    # Return True if the email is valid, False otherwise
+    return bool(match)
+
+def extract_emails_from_text(text):
+    # Define the regular expression pattern for extracting email addresses
+    pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    
+    # Use re.findall to find all email addresses in the text
+    emails = re.findall(pattern, text)
+    
+    return emails
+
+# Example usage
+if __name__ == "__main__":
+    # Example text containing email addresses
+    example_text = "Contact us at info@example.com or support@company.com for assistance."
+
+    # Extract and print email addresses from the text
+    extracted_emails = extract_emails_from_text(example_text)
+    print("Extracted Email Addresses:")
+    for email in extracted_emails:
+        print(email)
+
+    # Validate email addresses
+    print("\nValidation:")
+    for email in extracted_emails:
+        is_valid = validate_email(email)
+        print(f"{email}: {is_valid}")
