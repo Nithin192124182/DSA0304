@@ -1,0 +1,21 @@
+from nltk.stem import PorterStemmer
+
+def apply_porter_stemmer(words):
+    # Create a PorterStemmer instance
+    porter_stemmer = PorterStemmer()
+
+    # Apply the Porter Stemmer to each word in the list
+    stemmed_words = [porter_stemmer.stem(word) for word in words]
+
+    return stemmed_words
+
+if __name__ == "__main__":
+    # List of words before stemming
+    words_before_stemming = ["jumps", "jumping", "jumper", "jumped", "easily", "running", "flies", "flying", "flies"]
+
+    # Apply Porter Stemmer
+    words_after_stemming = apply_porter_stemmer(words_before_stemming)
+
+    # Display the results
+    print("Words before stemming:", words_before_stemming)
+    print("Words after stemming:", words_after_stemming)
