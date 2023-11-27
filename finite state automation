@@ -1,0 +1,46 @@
+class FiniteStateAutomaton:
+    def __init__(self):
+        # Define the states of the automaton
+        self.states = {'q0', 'q1'}
+        
+        # Define the alphabet (input symbols)
+        self.alphabet = {'0', '1'}
+        
+        # Define the transition function
+        self.transitions = {
+            'q0': {'0': 'q1', '1': 'q0'},
+            'q1': {'0': 'q0', '1': 'q1'}
+        }
+        
+        # Define the initial state
+        self.initial_state = 'q0'
+        
+        # Define the set of accepting states
+        self.accepting_states = {'q0'}
+    
+    def process_input(self, input_string):
+        # Initialize the current state to the initial state
+        current_state = self.initial_state
+        
+        # Process each symbol in the input string
+        for symbol in input_string:
+            if symbol not in self.alphabet:
+                raise ValueError(f"Invalid symbol '{symbol}' in input.")
+            
+            # Update the current state based on the transition function
+            current_state = self.transitions[current_state][symbol]
+        
+        # Check if the final state is an accepting state
+        return current_state in self.accepting_states
+
+# Example usage
+if __name__ == "__main__":
+    # Create an instance of the FiniteStateAutomaton
+    fsm = FiniteStateAutomaton()
+
+    # Test the automaton with different input strings
+    test_strings = ["0011", "0101", "1100", "101010", "1111"]
+
+    for test_string in test_strings:
+        result = fsm.process_input(test_string)
+        print(f"Input: {test_string}, Result: {'Accepted' if result else 'Rejected'}")
