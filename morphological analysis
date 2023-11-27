@@ -1,0 +1,11 @@
+import nltk
+from nltk.tokenize import word_tokenize
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+sentence = "Unhappily, she ran quickly"
+words = word_tokenize(sentence)
+pos_tags = nltk.pos_tag(words)
+print("Original Sentence:", sentence)
+print("\nMorphological Analysis:")
+for word, pos_tag in pos_tags:
+    print(f"{word}: {pos_tag}")
