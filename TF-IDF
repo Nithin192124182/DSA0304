@@ -1,0 +1,17 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+documents = [
+    "Natural language processing (NLP) is a field of study in artificial intelligence.",
+    "NLP techniques are used in various applications like machine translation and sentiment analysis.",
+    "The development of NLP tools and libraries has made text analysis easier.",
+]
+query = "What is natural language processing?"
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(documents)
+query_vector = vectorizer.transform([query])
+cosine_similarities = cosine_similarity(query_vector, tfidf_matrix).flatten()
+most_similar_index = cosine_similarities.argmax()
+print("Query:", query)
+print("Most Similar Document:")
+print(documents[most_similar_index])
+print("Cosine Similarity:", cosine_similarities[most_similar_index])
