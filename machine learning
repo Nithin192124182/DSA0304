@@ -1,0 +1,29 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+import numpy as np
+
+# Given sentences
+sentences = [
+    "Artificial intelligence (AI) is a field of computer science.",
+    "Machine learning is a subset of AI that focuses on training models to make predictions.",
+    "Deep learning is a type of machine learning that uses neural networks with multiple layers.",
+    "Neural networks are composed of interconnected nodes called neurons.",
+    "Recurrent neural networks (RNNs) are commonly used in natural language processing tasks."
+]
+
+# Create a TF-IDF vectorizer
+vectorizer = TfidfVectorizer(stop_words='english')
+
+# Fit and transform the sentences to obtain the TF-IDF matrix
+tfidf_matrix = vectorizer.fit_transform(sentences)
+
+# Get feature names (words) from the vectorizer
+feature_names = np.array(vectorizer.get_feature_names_out())
+
+# Find the most important word in each sentence based on TF-IDF score
+for i, sentence in enumerate(sentences):
+    tfidf_scores = tfidf_matrix.getrow(i).toarray().flatten()
+    # Get indices of the top N words based on TF-IDF score (e.g., top 3)
+    top_indices = tfidf_scores.argsort()[-3:][::-1]
+    # Get corresponding words
+    top_words = feature_names[top_indices]
+    print(f"Key phrases in sentence {i + 1}: {', '.join(top_words)}")
